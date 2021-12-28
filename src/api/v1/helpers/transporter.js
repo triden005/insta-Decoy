@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const { EMAIL, SECRET, EMAILSERVICE } = require("../../../../config");
+const { EMAIL, SECRET, EMAILSERVICE } = require("../../../config");
 
 if (EMAILSERVICE === "gmail") {
     const transporterGmail = nodemailer.createTransport({
