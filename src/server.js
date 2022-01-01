@@ -7,7 +7,7 @@ const apis = require("./api");
 
 const app = express();
 app.use(morgan("dev"));
-
+app.use(express.json());
 // routes
 app.use("/api", apis);
 
@@ -23,7 +23,6 @@ app.use((req, res) => {
 const start = async () => {
     try {
         await connect();
-        console.log("connected to db");
         app.listen(PORT, () => {
             console.log(`Server is running in ${MODE} at port ${PORT}`);
         });

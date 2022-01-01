@@ -9,7 +9,7 @@ const config = {
 
     JWTSECRET: process.env.JWTSECRET || "secret",
     JWTEXP: "5d",
-
+    BASEURL: process.env.BASEURL || "http://localhost:3000",
     DBURL: process.env.MONGODBURL,
 };
 

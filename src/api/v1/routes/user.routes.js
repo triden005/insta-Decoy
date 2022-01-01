@@ -1,28 +1,19 @@
 const { Router } = require("express");
-const { transporter } = require("../helpers/transporter");
+const Usercontroller = require("../controllers/user.controller");
+const { protect } = require("../middlewares/auth.middleware");
 
 const userRouter = Router();
-userRouter.post("/", async (req, res) => {
-    const { to, subject, email_body } = req.body;
-    try {
-        await transporter.sendMail({
-            to,
-            subject: subject || "Testing mail",
-            text: email_body,
-        });
-        return res
-            .status(200)
-            .json({
-                success: true,
-                message: "Email sent successfully",
-            })
-            .end();
-    } catch (e) {
-        console.log(e.message, "at route POST /");
-        return res
-            .status(500)
-            .json({ success: false, message: e.message })
-            .end();
-    }
-});
+
+userRouter.post("/signup", Usercontroller.signup);
+userRouter.get("/email_verify/:id", Usercontroller.verifyEmailLink);
+userRouter
+    .route("/")
+    .get(Usercontroller.getUserProfile)
+    .put(Usercontroller.updateCurrentUser);
+
+userRouter.get("/:id", protect, Usercontroller.findUserByusername);
+userRouter.post("/forgot_password", Usercontroller.forgotPassword);
+userRouter.post("/update_password", Usercontroller.updatePassword);
+
+userRouter.post("/search", protect, Usercontroller.searchUsers);
 module.exports = userRouter;

@@ -11,6 +11,8 @@ const config = {
     JWTEXP: "5d",
 
     DBURL: process.env.MONGODBURL,
+    EMAILSERVICEBASEURL:
+        process.env.EMAILSERVICEBASEURL || `http://localhost:4000`,
 };
 
 module.exports = config;

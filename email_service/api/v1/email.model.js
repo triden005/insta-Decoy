@@ -2,20 +2,24 @@ const mongoose = require("mongoose");
 
 const emailSchema = new mongoose.Schema(
     {
-        eventparam: {
+        verificationCode: {
             type: String,
             unique: true,
             required: true,
         },
         eventName: {
             type: String,
-            enum: ["activationemail"],
+            enum: ["verificationemail", "forgotpasswordemail"],
             required: true,
         },
         associatedUser: {
             type: mongoose.SchemaTypes.ObjectId,
             ref: "user",
             required: true,
+        },
+        failed: {
+            type: Boolean,
+            default: false,
         },
     },
     { timestamps: true },

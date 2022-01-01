@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema(
     {
@@ -15,14 +16,12 @@ const userSchema = new mongoose.Schema(
         },
         passwordHash: {
             type: String,
+            select: false,
             required: true,
         },
         name: {
             type: String,
             required: true,
-        },
-        profilePicture: {
-            type: URL,
         },
         phoneNumber: {
             type: Number,
@@ -34,7 +33,7 @@ const userSchema = new mongoose.Schema(
         profileStatus: {
             type: String,
             enum: ["public", "private"],
-            default: "private",
+            default: "public",
         },
         Notification: {
             type: Boolean,
@@ -47,5 +46,30 @@ const userSchema = new mongoose.Schema(
     },
     { timestamps: true },
 );
+
+userSchema.pre("save", function (next) {
+    if (!this.isModified("passwordHash")) {
+        return next();
+    }
+    bcrypt.hash(this.passwordHash, 8, (err, hash) => {
+        if (err) {
+            return next(err);
+        }
+        this.passwordHash = hash;
+        next();
+    });
+});
+
+userSchema.methods.checkPassword = function (password) {
+    const passwordHash = this.passwordHash;
+    return new Promise((resolve, reject) => {
+        bcrypt.compare(password, passwordHash, (err, same) => {
+            if (err) {
+                return reject(err);
+            }
+            resolve(same);
+        });
+    });
+};
 
 module.exports.User = mongoose.model("user", userSchema);

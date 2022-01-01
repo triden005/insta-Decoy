@@ -3,7 +3,7 @@ const emailcontroller = require("./email.controller");
 
 const emailRouter = Router();
 emailRouter.post("/sendEmail", emailcontroller.sendEmail);
-emailRouter.post("/", emailcontroller.createEmailentry);
+emailRouter.post("/", emailcontroller.createEmailEntry);
 emailRouter.delete("/:id", emailcontroller.deleteOnebyId);
 emailRouter.post("/getBycode", emailcontroller.getOneByCode);
 
