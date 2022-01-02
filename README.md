@@ -28,5 +28,5 @@ Api Documentation Can be found at
 
 -   Email Service
     [View in Postman](https://www.postman.com/altimetry-operator-38048751/workspace/instadecoy/documentation/18846856-ed23335b-556f-4bc5-bfca-06f25245c128)
--   Email Service
+-   Main Service
     [View in Postman](https://www.postman.com/altimetry-operator-38048751/workspace/instadecoy/documentation/18846856-7b80e25b-56f8-46b7-b8d0-5ef8344885ff)
