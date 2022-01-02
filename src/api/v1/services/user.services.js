@@ -87,7 +87,6 @@ async function search(searchBy, searchValue, ignoreList, limit) {
             profileStatus: { $ne: "private" },
             verifiedUser: { $ne: "false" },
         };
-        console.log(filter);
         const results = await User.find(filter)
             .limit(limit || 100)
             .select("email username name")
@@ -134,7 +133,6 @@ async function createVerificationEmailEntry(
             username,
             name,
         );
-        console.log(res);
         if (res.success && res.data.verificationCode) {
             return res.data.verificationCode;
         }

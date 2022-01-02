@@ -20,7 +20,7 @@ exports.sendEmailrequest = async (to, subject, text) => {
     try {
         let config = {
             method: "post",
-            url: `${EMAILSERVICEBASEURL}/sendEmail`,
+            url: `${EMAILSERVICEBASEURL}/send_email`,
             headers: {
                 "Content-Type": "application/json",
             },
@@ -128,7 +128,7 @@ exports.getEmailEntryBycodeRequest = async (code) => {
     try {
         const config = {
             method: "post",
-            url: `${EMAILSERVICEBASEURL}/getBycode`,
+            url: `${EMAILSERVICEBASEURL}/getbycode`,
             headers: {
                 "Content-Type": "application/json",
             },

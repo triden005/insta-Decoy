@@ -8,8 +8,8 @@ userRouter.post("/signup", Usercontroller.signup);
 userRouter.get("/email_verify/:id", Usercontroller.verifyEmailLink);
 userRouter
     .route("/")
-    .get(Usercontroller.getUserProfile)
-    .put(Usercontroller.updateCurrentUser);
+    .get(protect, Usercontroller.getUserProfile)
+    .put(protect, Usercontroller.updateCurrentUser);
 
 userRouter.get("/:id", protect, Usercontroller.findUserByusername);
 userRouter.post("/forgot_password", Usercontroller.forgotPassword);

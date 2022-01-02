@@ -11,7 +11,6 @@ const { BASEURL } = require("../../config");
  * @returns null
  */
 async function sendEmail(to, subject, text) {
-    console.log(to, subject, text);
     await transporter.sendMail({
         to,
         subject: subject,
@@ -45,7 +44,6 @@ async function deleteOneById(id) {
  */
 async function createOne(eventName, associatedUser) {
     const code = await uuid();
-    console.log(code);
 
     const doc = await Email.create({
         verificationCode: code,

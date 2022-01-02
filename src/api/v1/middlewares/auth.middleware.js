@@ -24,7 +24,7 @@ exports.protect = async (req, res, next) => {
         return res.status(401).end();
     }
 
-    const user = await UserService.getOneById(payload.id);
+    const user = await UserService.findOneById(payload.id);
 
     if (!user) {
         return res.status(401).end();

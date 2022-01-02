@@ -92,7 +92,6 @@ exports.verifyEmailLink = async (req, res) => {
             return res.status(404).send();
         }
         let doc = await FetchService.getEmailEntryBycodeRequest(id);
-        console.log(doc);
         if (!doc || !doc.success) return res.status(404).send();
 
         if (doc.data.eventName === "verificationemail") {
@@ -131,8 +130,13 @@ exports.findUserByusername = async (req, res) => {
         const { id } = req.params;
         if (!id) return res.status(400).send();
         const record = await UserService.findOneByUsername(id);
-        if (!record) return res.status(404).json({});
-        return res.status(200).json(record);
+        if (!record || record.blockedUsers.includes(req.user.id))
+            return res.status(404).json({});
+        return res.status(200).json({
+            ...record._doc,
+            blockedUsers: [],
+            blockedBy: [],
+        });
     } catch (e) {
         return res.status(500).json({ message: e.message });
     }

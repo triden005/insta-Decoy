@@ -43,11 +43,9 @@ exports.login = async (req, res) => {
         const user = await User.findOne(filter)
             .select("email verifiedUser passwordHash")
             .exec();
-        console.log(user);
         if (!user) {
             return res.status(401).send(invalid);
         }
-        console.log(user.checkPassword);
         const match = await user.checkPassword(password);
 
         if (!match) {
