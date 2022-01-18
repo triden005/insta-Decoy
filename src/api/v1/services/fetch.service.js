@@ -1,6 +1,5 @@
 const axios = require("axios");
 const { EMAILSERVICEBASEURL } = require("../../../config");
-console.log(EMAILSERVICEBASEURL);
 /**
  @typedef fetchObject
  @type {Object}
@@ -78,7 +77,6 @@ exports.createEmailEntryRequest = async (
         };
 
         let res = await axios(config);
-        console.log(res);
         return {
             success: true,
             status: res.status,

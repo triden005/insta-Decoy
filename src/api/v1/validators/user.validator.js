@@ -1,4 +1,5 @@
 const { validate } = require("uuid");
+const { isValidObjectId } = require("mongoose");
 const validator = require("validator");
 /**
  * Validates email is correct or not
@@ -63,4 +64,17 @@ exports.tokenValidator = (token) => {
 exports.verificationCodeValidator = (code) => {
     if (validate(code)) return true;
     return false;
+};
+
+/**
+ * Check whether the id provided is valid or not
+ * @param {ObjectId} id
+ * @returns boolean
+ */
+exports.IdValidator = (id) => {
+    try {
+        return isValidObjectId(id) && validator.isMongoId(id);
+    } catch (e) {
+        return false;
+    }
 };

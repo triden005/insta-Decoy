@@ -190,7 +190,7 @@ exports.forgotPassword = async (req, res) => {
         return res.status(500).json({ message: e.message });
     }
 };
-exports.updatePassword = async (req, res) => {
+exports.updateforgotPassword = async (req, res) => {
     try {
         const { code, password } = req.body;
         if (!verificationCodeValidator(code)) {

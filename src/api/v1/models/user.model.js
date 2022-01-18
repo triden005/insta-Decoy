@@ -23,11 +23,17 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        profilePhoto: {
+            type: String,
+        },
         phoneNumber: {
             type: Number,
         },
         blockedUsers: [{ type: mongoose.SchemaTypes.ObjectId, ref: "user" }],
-        blockedBy: [{ type: mongoose.SchemaTypes.ObjectId, ref: "user" }],
+        blockedBy: {
+            type: [{ type: mongoose.SchemaTypes.ObjectId, ref: "user" }],
+            select: false,
+        },
         friends: [{ type: mongoose.SchemaTypes.ObjectId, ref: "user" }],
         Posts: [{ types: String }],
         profileStatus: {

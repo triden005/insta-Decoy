@@ -37,7 +37,7 @@ async function findOneById(id) {
 }
 
 /**
- *
+ * Creates one User
  * @param {Object} user
  * @returns User
  */
@@ -144,7 +144,7 @@ async function createVerificationEmailEntry(
 
 /**
  *  Sends synchronously the verificationEmail
- * @deprecated
+ * @deprecated Service moved to emailservice microservice
  * @param {string} email
  * @param {string} username
  * @param {string} code verification code to be sent
@@ -170,6 +170,104 @@ async function sendVerificationEmail(email, username, code) {
         return false;
     }
 }
+/**
+ * gets all friends by Object Id array
+ * @param {ObjectId[]} ids
+ * @returns User { username, name, email, profilePhoto }
+ */
+async function getAllFriendsbyid(ids) {
+    return await User.find({ _id: { $in: ids } })
+        .select("username name email profilePhoto")
+        .exec();
+}
+
+/**
+ * addes respective ids to each others friends field
+ * @param {ObjectId} user1ID
+ * @param {ObjectId} user2ID
+ * @returns boolean
+ */
+async function makeFriends(user1ID, user2ID) {
+    try {
+        const users = await User.find({
+            _id: { $in: [user1ID, user2ID] },
+        }).exec();
+
+        const [u1, u2] = users;
+        if (
+            users.length < 2 ||
+            u1.blockedUsers.map((each) => each.toString()).includes(u2.id) ||
+            u2.blockedUsers.map((each) => each.toString()).includes(u1.id)
+        )
+            return false;
+        u1.friends.push(u2._id);
+        u2.friends.push(u1._id);
+        await Promise.all([u1.save(), u2.save()]);
+        return true;
+    } catch (_) {
+        return false;
+    }
+}
+
+/**
+ * Unfriends Users ie Filters out ids from corresponding users
+ * @param {ObjectId} user1ID
+ * @param {ObjectId} user2ID
+ * @returns
+ */
+async function unfriend(user1ID, user2ID) {
+    try {
+        const users = await User.find({ _id: { $in: [user1ID, user2ID] } });
+        if (users.length < 2) return false;
+        const [u1, u2] = users;
+        u1.friends = u1.friends.filter((each) => !u2._id.equals(each));
+        u2.friends = u2.friends.filter((each) => !u1._id.equals(each));
+        await Promise.all([u1.save(), u2.save()]);
+        return true;
+    } catch (_) {
+        return false;
+    }
+}
+/**
+ * Blocks or unblocks user depending upon the prevState
+ * @param {ObjectId} userId
+ * @param {String} username
+ * @returns Status (blocked|unblocked)
+ */
+async function blockUnblockUser(userId, username) {
+    let status;
+    const [user, person] = await Promise.all([
+        User.findById(userId).exec(),
+        User.findOne({ username }).select("+blockedBy").exec(),
+    ]);
+    if (!person || person.id === user.id) throw new Error("bad Request");
+
+    if (user.blockedUsers.map((each) => each.toString()).includes(person.id)) {
+        status = "unblocked";
+        user.blockedUsers = user.blockedUsers.filter(
+            (each) => !each.equals(person._id),
+        );
+        person.blockedBy = person.blockedBy.filter(
+            (each) => !each.equals(user._id),
+        );
+    } else {
+        status = "blocked";
+        user.blockedUsers.push(person._id);
+        person.blockedBy.push(user._id);
+
+        // means they were friend and blocked each other : Generally happens :-)
+        if (user.friends.map((each) => each.toString()).includes(person.id)) {
+            user.friends = user.friends.filter(
+                (each) => !each.equals(person._id),
+            );
+            person.friends = person.friends.filter(
+                (each) => !each.equals(user._id),
+            );
+        }
+    }
+    await Promise.all[(user.save(), person.save())];
+    return status;
+}
 module.exports = {
     findOneById,
     findOneByEmail,
@@ -182,4 +280,8 @@ module.exports = {
     changeAccountStateVerified,
     createVerificationEmailEntry,
     sendVerificationEmail,
+    makeFriends,
+    unfriend,
+    getAllFriendsbyid,
+    blockUnblockUser,
 };

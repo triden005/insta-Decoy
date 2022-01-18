@@ -13,6 +13,12 @@ const config = {
     DBURL: process.env.MONGODBURL,
     EMAILSERVICEBASEURL:
         process.env.EMAILSERVICEBASEURL || `http://localhost:4000`,
+
+    // File upload
+
+    CLOUDAPIKEY: process.env.CLOUDAPIKEY,
+    CLOUDNAME: process.env.CLOUDNAME,
+    CLOUDAPISECRET: process.env.CLOUDAPISECRET,
 };
 
 module.exports = config;

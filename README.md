@@ -3,21 +3,36 @@
 Environment setup for local Run
 
 -   Clone The repo and install dependencies
--   create a .env in the parent folder -TemplateFollows
+
     ```
-    EMAIL=
-    EMAILPASSWORD=
-    EMAILSERVICE=
-    MONGODBURL=
+    git clone <ulr of repo>
+    cd instaDecoy
+    yarn install
     ```
-    The bare minimum requrement is MONGODBURL There is no fallback if it is not provided
+
+    for running the email service in dev
+    `yarn dev_email`
+    and the main service
+    `yarn dev`
+
+    will add concurrently some day :relieved:
+
+-   create a .env in the parent folder -Template .env.development
+
+    The bare minimum requrement is MONGODBURL
+    And Cloudinary Credentails that are
+    CLOUDNAME=
+    CLOUDAPIKEY=
+    CLOUDAPISECRET=
+    These are used in only upload routes
+
 -   If you want to have Real Mails Then Set
     ```
     EMAILSERVICE=gmail
     EMAIL=your real gmail email
     EMAILPASSWORD= your real password
     ```
-    Note:-Please see nodemailer gmail setup if this donot suceeds because Gmail settings had to be changed for a account to sent email using nodemailer
+    Note:-Please see nodemailer gmail setup if this donot succeeds because Gmail settings had to be changed for a account to sent email using nodemailer
 -   Else you can have it handelled by ethereal account
     and you can login to view emails at
 
@@ -26,7 +41,19 @@ Environment setup for local Run
 
 Api Documentation Can be found at
 
--   Email Service
-    [View in Postman](https://www.postman.com/altimetry-operator-38048751/workspace/instadecoy/documentation/18846856-ed23335b-556f-4bc5-bfca-06f25245c128)
--   Main Service
-    [View in Postman](https://www.postman.com/altimetry-operator-38048751/workspace/instadecoy/documentation/18846856-7b80e25b-56f8-46b7-b8d0-5ef8344885ff)
+-   [Email Service](https://documenter.getpostman.com/view/18846856/UVRHjPqi)
+-   [Main Service](https://documenter.getpostman.com/view/18846856/UVRHjPqm)
+-   [Friends Collection](https://documenter.getpostman.com/view/18846856/UVXnFtWv)
+-   [Friends2 Collection](https://documenter.getpostman.com/view/18846856/UVXnFtWw)
+-   [Image Upload Service](https://documenter.getpostman.com/view/18846856/UVXnFtWx)
+
+-   [Public workspace Link](https://www.postman.com/altimetry-operator-38048751/workspace/instadecoy)
+
+## Technologies Used
+
+-   Node Js Express
+-   Cloudinary for file upload
+-   Multer
+-   morgan
+-   Nodemailer
+-   validator
