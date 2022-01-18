@@ -44,7 +44,7 @@ exports.login = async (req, res) => {
             .select("email verifiedUser passwordHash")
             .exec();
         if (!user) return res.status(401).send(invalid);
-        if (!user.varifiedUser)
+        if (!user.verifiedUser)
             return res
                 .status(400)
                 .json({ message: "please verify your email to login " });
