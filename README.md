@@ -6,7 +6,7 @@ Environment setup for local Run
 
     ```
     git clone <ulr of repo>
-    cd instaDecoy
+    cd insta-Decoy
     yarn install
     ```
 
@@ -42,10 +42,12 @@ Environment setup for local Run
 Api Documentation Can be found at
 
 -   [Email Service](https://documenter.getpostman.com/view/18846856/UVRHjPqi)
--   [Main Service](https://documenter.getpostman.com/view/18846856/UVRHjPqm)
+-   [User Service](https://documenter.getpostman.com/view/18846856/UVRHjPqm)
 -   [Friends Collection](https://documenter.getpostman.com/view/18846856/UVXnFtWv)
 -   [Friends2 Collection](https://documenter.getpostman.com/view/18846856/UVXnFtWw)
 -   [Image Upload Service](https://documenter.getpostman.com/view/18846856/UVXnFtWx)
+-   [Comment Service](https://documenter.getpostman.com/view/18846856/UVeAvpAN)
+-   [Posts Service](https://documenter.getpostman.com/view/18846856/UVeAvpAQ)
 
 -   [Public workspace Link](https://www.postman.com/altimetry-operator-38048751/workspace/instadecoy)
 
