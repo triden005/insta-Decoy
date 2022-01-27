@@ -37,11 +37,7 @@ exports.deleteOne = async (PostId, user) => {
 
     //  accessibility logic which should be seperate
     if (!canDeletePost(post, user)) throw new Error("invalid Opertion");
-    Comment.deleteMany({ PostId })
-        .exec()
-        .then((e) => {
-            console.log(e);
-        });
+    Comment.deleteMany({ PostId }).exec();
     return await Posts.deleteOne({
         _id: PostId,
     }).exec();
@@ -55,7 +51,9 @@ exports.tagFriends = async (users, postId, user) => {
     users = users.map((each) => {
         try {
             return ObjectId(each);
-        } catch (e) {}
+        } catch (e) {
+            //  do nothing
+        }
     });
     const usersarray = await User.aggregate([
         {
@@ -68,7 +66,6 @@ exports.tagFriends = async (users, postId, user) => {
         post.taggedUser.push(each._id);
     });
     await post.save();
-    console.log(usersarray);
     return { success: usersarray.length };
 };
 exports.getMyPosts = async (userId, pagenumber, pagesize) => {

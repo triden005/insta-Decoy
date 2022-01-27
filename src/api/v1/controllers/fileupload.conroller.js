@@ -56,7 +56,6 @@ exports.createOnePost = async (req, res) => {
             return res.status(400).json({ message: "something Bad happened!" });
         return res.status(201).json({ message: "post created successfully" });
     } catch (e) {
-        console.log(e);
         res.status(500).json({ message: e.message });
     }
 };

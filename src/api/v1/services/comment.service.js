@@ -46,7 +46,6 @@ exports.createCommentOnPost = async (text, parentId, user) => {
     //accessibilty logic which should be seperate
     if (!canCreateCommentOnPost(user, parentPost))
         throw new Error("Not accessible");
-    console.log(parentPost.id);
     const comment = await Comment.create({
         text,
         creator: user._id,
@@ -101,8 +100,7 @@ exports.deleteComment = async (commentId, user) => {
 
     //  means comment is having children
     if (comment.haveChild) {
-        const doc = await Comment.deleteMany({ parent: post._id }).exec();
-        console.log(doc);
+        await Comment.deleteMany({ parent: post._id }).exec();
     }
     return await Comment.deleteOne({ _id: commentId });
 };

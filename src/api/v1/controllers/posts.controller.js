@@ -49,7 +49,6 @@ exports.tagFriendOnPost = async (req, res) => {
 exports.deleteOne = async (req, res) => {
     try {
         const { id } = req.params;
-        console.log(id);
         if (!IdValidator(id))
             return res.status(404).json({ message: "not found" });
 
