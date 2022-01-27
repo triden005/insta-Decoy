@@ -35,7 +35,12 @@ const userSchema = new mongoose.Schema(
             select: false,
         },
         friends: [{ type: mongoose.SchemaTypes.ObjectId, ref: "user" }],
-        Posts: [{ types: String }],
+        Posts: [
+            {
+                type: mongoose.SchemaTypes.ObjectId,
+                ref: "posts",
+            },
+        ],
         profileStatus: {
             type: String,
             enum: ["public", "private"],
@@ -49,11 +54,18 @@ const userSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
+        bookmarkedPosts: [
+            {
+                type: mongoose.SchemaTypes.ObjectId,
+                ref: "posts",
+            },
+        ],
     },
     { timestamps: true },
 );
 
-userSchema.pre("save", function (next) {
+userSchema.pre("validate", function (next) {
+    console.log(this.isModified("passwordHash"));
     if (!this.isModified("passwordHash")) {
         return next();
     }

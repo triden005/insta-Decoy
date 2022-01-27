@@ -7,7 +7,7 @@
         "lint": "eslint .",
         "start": "node .",
         "start_email": "node email_service/server.js",
-        "dev": "nodemon .",
+        "dev": "nodemon --delay 5.5 .",
         "dev_email": "nodemon email_service/server.js --watch email_service"
     },
     "repository": {

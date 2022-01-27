@@ -18,6 +18,7 @@ exports.uploader = (file, folder) => {
             cloudinary.uploader
                 .upload(file, { folder: folder, resource_type: "auto" })
                 .then((result) => {
+                    console.log(result);
                     resolve(result);
                 });
         } catch (error) {

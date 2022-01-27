@@ -22,7 +22,7 @@ exports.getFriend = async (req, res) => {
  */
 exports.getFriendRequest = async (req, res) => {
     try {
-        const { pagenumber, pagesize } = req.body;
+        let { pagenumber, pagesize } = req.body;
         if (
             !pagenumber ||
             !pagesize ||
@@ -33,6 +33,7 @@ exports.getFriendRequest = async (req, res) => {
                 .status(404)
                 .json({ message: "pagenumber and pagesize is required" });
         }
+        pagenumber = Math.max(1, pagenumber);
         const requests = await RequestService.findreceivedbyTypePaginated(
             req.user._id,
             "friendrequest",
@@ -51,7 +52,7 @@ exports.getFriendRequest = async (req, res) => {
  */
 exports.getSentFriendRequest = async (req, res) => {
     try {
-        const { pagenumber, pagesize } = req.body;
+        let { pagenumber, pagesize } = req.body;
         if (
             !pagenumber ||
             !pagesize ||
@@ -62,6 +63,7 @@ exports.getSentFriendRequest = async (req, res) => {
                 .status(404)
                 .json({ message: "pagenumber and pagesize is required" });
         }
+        pagenumber = Math.max(1, pagenumber);
         const requests = await RequestService.findEmittedbyTypePaginated(
             req.user._id,
             "friendrequest",
