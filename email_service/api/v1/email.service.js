@@ -1,7 +1,12 @@
 const { Email } = require("./email.model");
 const { v4: uuid } = require("uuid");
 const { transporter } = require("./helper/transporter");
-const { BASEURL } = require("../../config");
+const {
+    verificationMailtemplate,
+    forgotPasswordMail,
+    friendrequestNotification,
+    friendrequestAcceptedNotification,
+} = require("./helper/templates");
 
 /**
  * sends Email
@@ -67,25 +72,26 @@ async function sendEventEmail(eventName, email, username, name, code, id) {
         let message = "";
         let subject = "";
         if (eventName === "verificationemail") {
-            let url = BASEURL + "/api/v1/user";
-            subject = "Verification Link for Account";
-            message = `
-            Dear ${name},
-
-            You are just one step behind to verify your account and get most out of it 
-            Please click the link below to confirm your account creation with username ${username}
-
-            ${url}/email_verify/${code}
-            `;
+            ({ subject, message } = verificationMailtemplate({
+                name,
+                username,
+                code,
+            }));
         } else if (eventName === "forgotpasswordemail") {
-            subject = `Update Password Link For Username ${username}`;
-            message = `
-            Dear ${name},
-            For updating the password add this token as code:[token] and send password both in the body
-            If not requested then ignore this mail .You can login through your old password
-            
-            ${code}
-            `;
+            ({ subject, message } = forgotPasswordMail({
+                name,
+                username,
+                code,
+            }));
+        } else if (eventName === "notificationfriendrequest") {
+            ({ subject, message } = friendrequestNotification({
+                name,
+                username,
+            }));
+        } else if (eventName === "notificationacceptedrequest") {
+            ({ subject, message } = friendrequestAcceptedNotification({
+                name,
+            }));
         }
         await sendEmail(email, subject, message);
         return true;

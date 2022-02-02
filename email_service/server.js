@@ -11,12 +11,12 @@ app.use(express.json());
 // routes
 app.use("/", emailRouter);
 
-app.get("/ping", (req, res) => {
+app.get("/ping", (_req, res) => {
     res.status(200).send("pong");
 });
 
 // dead end
-app.use((req, res) => {
+app.use((_req, res) => {
     res.status(404).json({ message: "verb not supported" }).end();
 });
 

@@ -70,6 +70,24 @@ exports.createEmailEntry = async (req, res) => {
         res.status(500).json({ message: e.message });
     }
 };
+
+/**
+ * Send Event Email without creating db entry used in notification email
+ */
+exports.sendEmailnotification = async (req, res) => {
+    try {
+        const { eventName, email, username, name } = req.body;
+        if (!eventValidator(eventName)) {
+            return res.status(400).json({ message: "invalid eventName" });
+        }
+        await EmailService.sendEventEmail(eventName, email, username, name);
+
+        return res.status(201).json("done");
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({ message: e.message });
+    }
+};
 /**
  * Get One Email Document By remote Request and deletes the Document at the same time
  */

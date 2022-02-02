@@ -33,7 +33,12 @@ exports.IdValidator = (id) => {
  * @returns boolean
  */
 exports.eventValidator = (eventName) => {
-    const acceptedEventName = ["verificationemail", "forgotpasswordemail"];
+    const acceptedEventName = [
+        "verificationemail",
+        "forgotpasswordemail",
+        "notificationfriendrequest",
+        "notificationacceptedrequest",
+    ];
     return acceptedEventName.includes(eventName);
 };
 

@@ -202,6 +202,14 @@ async function makeFriends(user1ID, user2ID) {
             return false;
         u1.friends.push(u2._id);
         u2.friends.push(u1._id);
+        if (u2.notification) {
+            fetchService.sendnotification(
+                u2.email,
+                "notificationacceptedrequest",
+                u1.username,
+                u2.name,
+            );
+        }
         await Promise.all([u1.save(), u2.save()]);
         return true;
     } catch (_) {

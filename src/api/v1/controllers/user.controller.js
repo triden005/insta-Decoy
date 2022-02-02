@@ -151,7 +151,7 @@ exports.updateCurrentUser = async (req, res) => {
             "password",
             "phoneNumber",
             "profileStatus",
-            "Notification",
+            "notification",
         ].forEach((element) => {
             if (req.body[element]) {
                 update[element] = req.body[element];

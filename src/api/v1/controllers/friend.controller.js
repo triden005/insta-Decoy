@@ -1,5 +1,6 @@
 const RequestService = require("../services/request.service");
 const UserService = require("../services/user.services");
+const fetchService = require("../services/fetch.service");
 const {
     usernameValidator,
     IdValidator,
@@ -104,13 +105,20 @@ exports.sendFriendRequest = async (req, res) => {
                 .status(400)
                 .json({ message: "Please Unblock the user first" });
         }
-
+        if (user.notification)
+            await fetchService.sendnotification(
+                user.email,
+                "notificationfriendrequest",
+                req.user.username,
+                user.name,
+            );
         await RequestService.createOne(req.user._id, user.id, "friendrequest");
         res.status(201).json({ message: "friend Request Sent" });
     } catch (e) {
         return res.status(500).json({ message: e.message });
     }
 };
+
 /**
  *
  * @param {Express.Request} req
