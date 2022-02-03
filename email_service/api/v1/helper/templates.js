@@ -1,7 +1,7 @@
-const { BASEURL } = require("../../../config");
+const { MAINSERVICEBASEURL } = require("../../../config");
 
 exports.verificationMailtemplate = ({ name, username, code }) => {
-    let url = BASEURL + "/api/v1/user";
+    let url = MAINSERVICEBASEURL + "/api/v1/user";
     let subject = "Verification Link for Account";
     let message = `
     Dear ${name},
