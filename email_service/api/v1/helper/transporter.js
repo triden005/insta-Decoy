@@ -1,12 +1,12 @@
 const nodemailer = require("nodemailer");
-const { EMAIL, SECRET, EMAILSERVICE } = require("../../../config");
+const { EMAIL, EMAILKEY, EMAILTRANSPORTER } = require("../../../config");
 
-if (EMAILSERVICE === "gmail") {
+if (EMAILTRANSPORTER === "gmail") {
     const transporterGmail = nodemailer.createTransport({
         service: "gmail",
         auth: {
             user: EMAIL,
-            pass: SECRET,
+            pass: EMAILKEY,
         },
     });
     module.exports.transporter = transporterGmail;

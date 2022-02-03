@@ -1,5 +1,7 @@
 const axios = require("axios");
-const { EMAILSERVICEBASEURL } = require("../../../config");
+const { EMAILSERVICEBASEURL, SERVICETOKEN } = require("../../../config");
+// TODO: Create seperate instance of axios with header
+axios.defaults.headers.common["Authorization"] = SERVICETOKEN;
 /**
  @typedef fetchObject
  @type {Object}
