@@ -10,7 +10,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 // routes
 app.use((req, res, next) => {
-    if (!req.headers["Authorisation"] !== SERVICETOKEN) {
+    if (req.headers["authorization"] !== SERVICETOKEN) {
         return res.sendStatus(401);
     }
     next();

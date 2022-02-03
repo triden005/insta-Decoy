@@ -27,12 +27,17 @@ Environment setup for local Run
     These are used in only upload routes
 
 -   If you want to have Real Mails Then Set
+
     ```
-    EMAILSERVICE=gmail
-    EMAIL=your real gmail email
-    EMAILPASSWORD= your real password
+    EMAIL= //email
+    EMAILKEY= // email password or authtoken
+    EMAILTRANSPORTER= // gmail or Ethereal
+
+
     ```
+
     Note:-Please see nodemailer gmail setup if this donot succeeds because Gmail settings had to be changed for a account to sent email using nodemailer
+
 -   Else you can have it handelled by ethereal account
     and you can login to view emails at
 

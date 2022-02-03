@@ -5,7 +5,7 @@ const config = {
     PORT: process.env.PORT || 4000,
 
     EMAIL: process.env.EMAIL,
-    EMAILKEY: process.env.EMAILPASSWORD,
+    EMAILKEY: process.env.EMAILKEY,
     EMAILTRANSPORTER: process.env.EMAILTRANSPORTER,
     SERVICETOKEN: process.env.SERVICETOKEN,
 
